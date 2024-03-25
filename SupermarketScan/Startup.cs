@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using SupermarketScanAPI.AppDbContext.Products;
 
 namespace SupermarketScanAPI
 {
@@ -19,10 +21,9 @@ namespace SupermarketScanAPI
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SupermarketScanAPI", Version = "v1" }));
 
-            //services.AddDbContext<SupermarketScanDbContext>(options =>
-            //{
-            //    options.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan__cn"));
-            //});
+            services.AddDbContext<ProductsDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Products__cn")))
+                    //.AddDbContext<UsersDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Users__cn")))
+                    ;
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
