@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SmScan.API.AppDbContext.Productos;
 using SmScan.API.Domains.PaisesOrigen;
-using SmScanAPI.AppDbContext.Productos;
 
 namespace SmScanAPI.Controllers
 {

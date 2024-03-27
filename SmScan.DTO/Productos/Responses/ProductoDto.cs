@@ -1,5 +1,5 @@
 ﻿using SmScan.DTO.Categorias.Responses;
-using SmScan.DTO.IngestasReferencia.Responses;
+using SmScan.DTO.IngestaReferencia.Responses;
 using SmScan.DTO.PaisesOrigen.Responses;
 
 namespace SmScan.DTO.Productos.Responses
