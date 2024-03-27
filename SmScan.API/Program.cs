@@ -1,4 +1,4 @@
-using SupermarketScanAPI;
+using SmScanAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
