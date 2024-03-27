@@ -4,7 +4,7 @@ using SmScan.API.AppDbContext.Productos;
 using SmScan.API.AppDbContext.Usuarios;
 using System.Text.Json.Serialization;
 
-namespace SmScanAPI
+namespace SmScan.API
 {
     public class Startup
     {

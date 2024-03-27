@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SmScan.API.AppDbContext.Productos;
 using SmScan.API.Domains.Productos;
 
-namespace SmScanAPI.Controllers
+namespace SmScan.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -22,9 +22,14 @@ namespace SmScanAPI.Controllers
             return await _context.Productos.ToListAsync();
         }
 
+        // TODO: 3 gets de ProductosVista...
+
         [HttpPost]
         public async Task<ActionResult<Producto>> PostProducto(Producto producto)
         {
+            //TODO: Validar que el producto no exista
+            //TODO: Validar que la categoria y el pais de origen existan
+
             _context.Productos.Add(producto);
             await _context.SaveChangesAsync();
 
@@ -34,6 +39,8 @@ namespace SmScanAPI.Controllers
         [HttpPut("{idProducto:int}")]
         public async Task<IActionResult> PutProducto(int idProducto, Producto producto)
         {
+            //TODO: Validar que la categoria y el pais de origen existan
+
             if (idProducto != producto.IdProducto) return BadRequest("El ID no coincide");
 
             _context.Entry(producto).State = EntityState.Modified;

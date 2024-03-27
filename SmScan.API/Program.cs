@@ -1,4 +1,4 @@
-using SmScanAPI;
+using SmScan.API;
 
 var builder = WebApplication.CreateBuilder(args);
 

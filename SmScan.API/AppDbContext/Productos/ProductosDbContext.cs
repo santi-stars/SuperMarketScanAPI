@@ -3,6 +3,7 @@ using SmScan.API.Domains.Categorias;
 using SmScan.API.Domains.IngestaReferencia;
 using SmScan.API.Domains.PaisesOrigen;
 using SmScan.API.Domains.Productos;
+using SmScan.API.Domains.Productos.Vistas;
 
 namespace SmScan.API.AppDbContext.Productos;
 

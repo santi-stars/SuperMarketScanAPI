@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SmScan.API.AppDbContext.Usuarios;
 using SmScan.API.Domains.Usuarios;
 
-namespace SmScanAPI.Controllers
+namespace SmScan.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

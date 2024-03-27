@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SmScan.API.AppDbContext.Productos;
 using SmScan.API.Domains.PaisesOrigen;
 
-namespace SmScanAPI.Controllers
+namespace SmScan.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
