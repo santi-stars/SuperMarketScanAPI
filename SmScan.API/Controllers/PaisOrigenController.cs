@@ -10,15 +10,19 @@ namespace SmScan.API.Controllers
     public class PaisOrigenController : ControllerBase
     {
         private readonly ProductosDbContext _context;
+        private readonly ILogger<PaisOrigenController> _logger;
 
-        public PaisOrigenController(ProductosDbContext context)
+        public PaisOrigenController(ProductosDbContext context, ILogger<PaisOrigenController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PaisOrigen>>> GetPaisOrigen()
         {
+            _logger.LogInformation("GET PaisOrigen");
+
             return await _context.PaisOrigen.ToListAsync();
         }
 

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmScan.API.AppDbContext.Usuarios;
 using SmScan.API.Domains.Usuarios;
+using SmScan.DTO.Usuarios;
 
 namespace SmScan.API.Controllers
 {
@@ -10,31 +12,72 @@ namespace SmScan.API.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly UsuariosDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly ILogger<UsuariosController> _logger;
 
-        public UsuariosController(UsuariosDbContext context)
+        public UsuariosController(UsuariosDbContext context, IMapper mapper, ILogger<UsuariosController> logger)
         {
             _context = context;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
+        public async Task<ActionResult<IEnumerable<UsuarioResponseDto>>> GetUsuario()
         {
-            return await _context.Usuarios.ToListAsync();
+            _logger.LogInformation("[GET] Usuarios");
+
+            var usuarios = await _context.Usuarios.ToListAsync();
+
+            return _mapper.Map<List<UsuarioResponseDto>>(usuarios);
+        }
+
+        [HttpGet("id:int")]
+        public async Task<ActionResult<UsuarioResponseDto>> GetUsuarioById(int id)
+        {
+            _logger.LogInformation($"[GET] Usuario por ID: {id}");
+
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.IdUsuario == id);
+
+            if (usuario == null)
+            {
+                _logger.LogInformation($"[NotFound] Usuario con ID: {id}");
+
+                return NotFound();
+            }
+
+            return _mapper.Map<UsuarioResponseDto>(usuario);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        public async Task<ActionResult<Usuario>> PostUsuario(UsuarioRequestDto usuarioDto)
         {
+            _logger.LogInformation($"[POST] Usuario: {usuarioDto.Email}");
+
+            var existeEmail = await _context.Usuarios.AnyAsync(u => u.Email == usuarioDto.Email);
+
+            if (existeEmail)
+            {
+                _logger.LogInformation($"[BadRequest] Usuario: {usuarioDto.Email}");
+
+                return BadRequest($"El email {usuarioDto.Email} ya existe");
+            }
+
+            var usuario = _mapper.Map<Usuario>(usuarioDto);
+
             _context.Usuarios.Add(usuario);
+
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.IdUsuario }, usuario);
+            return CreatedAtAction("GetUsuario", new { id = usuario.IdUsuario }, usuarioDto);
         }
-
-        [HttpPut("{idUsuario:int}")]
-        public async Task<IActionResult> PutUsuario(int idUsuario, Usuario usuario)
+        //TODO: Dto
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> PutUsuario(int id, UsuarioRequestDto usuarioDto)
         {
-            if (idUsuario != usuario.IdUsuario) return BadRequest("El ID no coincide");
+            _logger.LogInformation($"[PUT] Usuario: {usuarioDto.Email}");
+
+            var usuario = _mapper.Map<Usuario>(usuarioDto);
 
             _context.Entry(usuario).State = EntityState.Modified;
 
@@ -44,15 +87,20 @@ namespace SmScan.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Usuarios.Any(e => e.IdUsuario == idUsuario)) return NotFound();
+                if (!_context.Usuarios.Any(e => e.IdUsuario == id))
+                {
+                    _logger.LogInformation($"[NotFound] Usuario con ID: {id}");
 
+                    return NotFound();
+                }
                 else throw;
             }
 
             return NoContent();
         }
 
-        [HttpDelete("{idUsuario:int}")]
+        //TODO: Dto
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteUsuario(int idUsuario)
         {
             var usuario = await _context.Usuarios.FindAsync(idUsuario);

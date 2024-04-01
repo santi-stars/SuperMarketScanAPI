@@ -28,6 +28,8 @@ public partial class UsuariosDbContext : DbContext
         {
             entity.HasKey(e => e.IdUsuario).HasName("PK__Usuarios__5B65BF975C327E27");
 
+            entity.HasIndex(e => e.Email).IsUnique();
+
             entity.Property(e => e.Contraseña).HasMaxLength(100);
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.Nombre).HasMaxLength(100);

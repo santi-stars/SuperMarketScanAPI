@@ -10,15 +10,19 @@ namespace SmScan.API.Controllers
     public class ProductosController : ControllerBase
     {
         private readonly ProductosDbContext _context;
+        private readonly ILogger<ProductosController> _logger;
 
-        public ProductosController(ProductosDbContext context)
+        public ProductosController(ProductosDbContext context, ILogger<ProductosController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Producto>>> GetProducto()
         {
+            _logger.LogInformation("GET Productos");
+
             return await _context.Productos.ToListAsync();
         }
 
@@ -29,7 +33,7 @@ namespace SmScan.API.Controllers
         {
             //TODO: Validar que el producto no exista
             //TODO: Validar que la categoria y el pais de origen existan
-
+            //TODO: validarlo en todos los controllers
             _context.Productos.Add(producto);
             await _context.SaveChangesAsync();
 

@@ -10,15 +10,19 @@ namespace SmScan.API.Controllers
     public class CategoriasController : ControllerBase
     {
         private readonly ProductosDbContext _context;
+        private readonly ILogger<CategoriasController> _logger;
 
-        public CategoriasController(ProductosDbContext context)
+        public CategoriasController(ProductosDbContext context, ILogger<CategoriasController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Categoria>>> GetCategoria()
         {
+            _logger.LogInformation("GET Categorias");
+
             return await _context.Categorias.ToListAsync();
         }
 
