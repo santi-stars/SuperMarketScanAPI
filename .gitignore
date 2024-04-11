@@ -27,7 +27,7 @@ nupkg/
 *.user
 *.userosscache
 *.sln.docstates
-
+color.txt
 # Build results
 [Dd]ebug/
 debug/*
@@ -40,10 +40,16 @@ build/
 bld/
 bin/*
 obj/*
+logs/*
 *bin/
 *obj/
+*logs/
 */bin/
 */obj/
+*/logs/
+/bin/
+/obj/
+/logs/
 [Bb]in/
 [Oo]bj/
 [Oo]ut/
@@ -52,5 +58,4 @@ msbuild.err
 msbuild.wrn
 /GestiTallerAPI/obj/*
 /GestiTallerAPI/obj/project.nuget.cache
-/bin/
-/obj/
+/color.txt
