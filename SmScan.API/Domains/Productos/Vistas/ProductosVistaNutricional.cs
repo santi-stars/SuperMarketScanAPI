@@ -2,7 +2,7 @@
 
 public partial class ProductosVistaNutricional
 {
-    public string CodigoBarras { get; set; }
+    public string CodigoBarras { get; set; } = string.Empty;
     public decimal? ValorEnergetico { get; set; }
     public decimal? PorcentajeValorEnergetico { get; set; }
     public decimal? Grasas { get; set; }

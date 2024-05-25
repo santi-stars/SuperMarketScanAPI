@@ -18,8 +18,8 @@ public partial class UsuariosDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Usuarios__cn"));
+        //if (!optionsBuilder.IsConfigured)
+        //    optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Usuarios__cn"));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

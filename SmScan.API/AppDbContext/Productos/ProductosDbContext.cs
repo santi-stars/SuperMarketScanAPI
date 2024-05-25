@@ -28,8 +28,8 @@ public partial class ProductosDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Products__cn"));
+        //if (!optionsBuilder.IsConfigured)
+        //    optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Products__cn"));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -75,6 +75,7 @@ public partial class ProductosDbContext : DbContext
             entity.Property(e => e.Fibra).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Grasas).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.HidratosDeCarbono).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.Imagen).HasColumnType("nvarchar(max)"); 
             entity.Property(e => e.Nombre).HasMaxLength(100);
             entity.Property(e => e.Peso).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Precio).HasColumnType("decimal(10, 2)");
@@ -101,6 +102,7 @@ public partial class ProductosDbContext : DbContext
             entity.Property(e => e.Descripcion)
                 .IsRequired()
                 .HasMaxLength(271);
+            entity.Property(e => e.Imagen).HasColumnType("nvarchar(max)");
             entity.Property(e => e.Nombre)
                 .IsRequired()
                 .HasMaxLength(100);
@@ -121,6 +123,7 @@ public partial class ProductosDbContext : DbContext
             entity.Property(e => e.Fibra).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Grasas).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.HidratosDeCarbono).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.Imagen).HasColumnType("nvarchar(max)"); 
             entity.Property(e => e.Nombre)
                 .IsRequired()
                 .HasMaxLength(100);
