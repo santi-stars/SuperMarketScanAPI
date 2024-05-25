@@ -68,6 +68,8 @@ public partial class ProductosDbContext : DbContext
         {
             entity.HasKey(e => e.IdProducto).HasName("PK__Producto__09889210927295B0");
 
+            entity.HasIndex(e => e.CodigoBarras).IsUnique();
+
             entity.Property(e => e.CodigoBarras).HasMaxLength(50);
             entity.Property(e => e.Descripcion).HasMaxLength(255);
             entity.Property(e => e.Fibra).HasColumnType("decimal(10, 2)");

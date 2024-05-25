@@ -2,23 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using SmScan.API.Domains.Categorias;
 using SmScan.API.AppDbContext.Productos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmScan.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CategoriasController : ControllerBase
     {
         private readonly ProductosDbContext _context;
+        private readonly ILogger<CategoriasController> _logger;
 
-        public CategoriasController(ProductosDbContext context)
+        public CategoriasController(ProductosDbContext context, ILogger<CategoriasController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Categoria>>> GetCategoria()
         {
+            _logger.LogInformation("GET Categorias");
+
             return await _context.Categorias.ToListAsync();
         }
 

@@ -1,5 +1,6 @@
 ﻿using SmScan.API.Domains.Categorias;
 using SmScan.API.Domains.PaisesOrigen;
+using SmScan.API.Validations;
 
 namespace SmScan.API.Domains.Productos;
 
@@ -8,6 +9,7 @@ public partial class Producto
     public int IdProducto { get; set; }
     public int IdPaisOrigen { get; set; }
     public int IdCategoria { get; set; }
+    [PrimeraLetraMayuscula]
     public string Nombre { get; set; } = null!;
     public string Descripcion { get; set; } = null!;
     public decimal Precio { get; set; }

@@ -1,27 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmScan.API.AppDbContext.Productos;
 using SmScan.API.Domains.Productos;
+using SmScan.DTO.ProductosVista;
 
 namespace SmScan.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ProductosController : ControllerBase
     {
         private readonly ProductosDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly ILogger<ProductosController> _logger;
 
-        public ProductosController(ProductosDbContext context)
+        public ProductosController(ProductosDbContext context, IMapper mapper, ILogger<ProductosController> logger)
         {
             _context = context;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Producto>>> GetProducto()
+        public async Task<ActionResult<IEnumerable<Producto>>> GetProductos()
         {
+            _logger.LogInformation("GET Productos");
+
             return await _context.Productos.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("base")]
+        public async Task<ActionResult<IEnumerable<ProductosVistaBaseDto>>> GetProductosVistaBase(string? codigoBarras)
+        {
+
+            if (!string.IsNullOrEmpty(codigoBarras))
+            {
+                _logger.LogInformation($"GET Productos vista BASE con codigo de barras: {codigoBarras}");
+                var productoVistaBase = await _context.ProductosVistaBase.FirstOrDefaultAsync(p => p.CodigoBarras == codigoBarras);
+                if (productoVistaBase == null) return NotFound();
+                else return Ok(_mapper.Map<ProductosVistaBaseDto>(productoVistaBase));
+            }
+            else
+            {
+                _logger.LogInformation("GET Productos vista BASE");
+                var productosVistaBase = await _context.ProductosVistaBase.ToListAsync();
+                return Ok(_mapper.Map<List<ProductosVistaBaseDto>>(productosVistaBase));
+            }
+        }
         // TODO: 3 gets de ProductosVista...
 
         [HttpPost]
@@ -29,7 +58,7 @@ namespace SmScan.API.Controllers
         {
             //TODO: Validar que el producto no exista
             //TODO: Validar que la categoria y el pais de origen existan
-
+            //TODO: validarlo en todos los controllers
             _context.Productos.Add(producto);
             await _context.SaveChangesAsync();
 

@@ -2,23 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using SmScan.API.Domains.IngestaReferencia;
 using SmScan.API.AppDbContext.Productos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmScan.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class IngestaReferenciaController : ControllerBase
     {
         private readonly ProductosDbContext _context;
+        private readonly ILogger<IngestaReferenciaController> _logger;
 
-        public IngestaReferenciaController(ProductosDbContext context)
+        public IngestaReferenciaController(ProductosDbContext context, ILogger<IngestaReferenciaController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<IngestaReferencia>>> GetIngestaReferencia()
         {
+            _logger.LogInformation("GET IngestaReferencia");
+
             return await _context.IngestaReferencia.ToListAsync();
         }
 
