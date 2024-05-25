@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using SmScan.API.Domains.IngestaReferencia;
 using SmScan.API.AppDbContext.Productos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmScan.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class IngestaReferenciaController : ControllerBase

@@ -27,13 +27,6 @@ namespace SmScan.API
             }).AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-            //services.AddMediatR(config =>
-            //{
-            //    config.AddOpenBehavior(typeof(RequestLoggingPipeLineBehavior<,>));
-            //    //TODO: buscar e implementar 
-            //    //config.AddOpenBehavior(typeof(QueryCachingPipeLineBehavior<,>));
-            //});
-
             services.AddEndpointsApiExplorer();
 
             services.AddSwaggerGen(c =>
@@ -50,9 +43,6 @@ namespace SmScan.API
         {
             if (env.IsDevelopment())
             {
-                // registrar información sobre las solicitudes HTTP entrantes
-                //app.UseSerilogRequestLogging();
-
                 app.UseDeveloperExceptionPage();
 
                 app.UseSwagger();
@@ -60,15 +50,15 @@ namespace SmScan.API
             }
             else
             {
-                app.UseExceptionHandler("/Error");  //Ruta de errores - reemplaza el middleware UseDeveloperExceptionPage
-                app.UseHsts();  // HSTS - HTTP Strict Transport Security
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
 
-            //app.UseMiddleware<RequestLogContextMiddleware>();
-
             app.UseRouting();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
