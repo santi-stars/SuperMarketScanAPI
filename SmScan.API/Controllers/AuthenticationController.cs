@@ -40,7 +40,7 @@ namespace SmScan.API.Controllers
                 return BadRequest("Usuario nulo");
             }
 
-            if (usuarioRequest.Email == null || usuarioRequest.Contraseña == null)
+            if (usuarioRequest.Email == null || usuarioRequest.Password == null)
             {
                 _logger.LogInformation("[BadRequest] Email o contraseña nulos");
                 return BadRequest("Email o contraseña nulos");
@@ -53,7 +53,7 @@ namespace SmScan.API.Controllers
                 return NotFound();
             }
 
-            if (usuarioRequest.Email == usuario.Email && usuarioRequest.Contraseña == usuario.Contraseña)
+            if (usuarioRequest.Email == usuario.Email && usuarioRequest.Password == usuario.Contraseña)
             {
                 var claims = new ClaimsIdentity();
 

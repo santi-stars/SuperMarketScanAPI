@@ -73,7 +73,7 @@ namespace SmScan.API.Controllers
 
             return CreatedAtAction("GetUsuario", new { id = usuario.IdUsuario }, usuarioDto);
         }
-        //TODO: Dto
+
         [HttpPut("{id:int}")]
         public async Task<IActionResult> PutUsuario(int id, UsuarioRequestDto usuarioDto)
         {
@@ -101,7 +101,6 @@ namespace SmScan.API.Controllers
             return NoContent();
         }
 
-        //TODO: Dto
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteUsuario(int idUsuario)
         {

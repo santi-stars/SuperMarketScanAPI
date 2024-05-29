@@ -28,12 +28,6 @@
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="DDBB\Scripts\" />
-		<Folder Include="Middleware\" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\SmScan.DTO\SmScan.DTO.csproj" />
 	</ItemGroup>

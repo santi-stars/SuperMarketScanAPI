@@ -16,9 +16,9 @@ public class ProductoRequestDto
     public decimal Fibra { get; set; }
     public decimal Proteinas { get; set; }
     public decimal Sal { get; set; }
-    public byte[] Imagen { get; set; }
+    public string? Imagen { get; set; }
     public string CodigoBarras { get; set; } = null!;
-    //TODO: terminar
+
     public IngestaRefResponseDto? IngestaReferencia { get; set; } = null;
     public PaisOrigenResponseDto PaisOrigen { get; set; } = null!;
     public CategoriaResponseDto Categoria { get; set; } = null!;

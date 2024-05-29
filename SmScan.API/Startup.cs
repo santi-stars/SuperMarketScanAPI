@@ -26,6 +26,11 @@ namespace SmScan.API
                 options.Filters.Add(typeof(FilterException));
             }).AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            
+            services.AddDbContext<ProductosDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<UsuariosDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddEndpointsApiExplorer();
 
@@ -34,9 +39,9 @@ namespace SmScan.API
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddDbContext<ProductosDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Productos__cn")))
-                    .AddDbContext<UsuariosDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Usuarios__cn")))
-                    ;
+            //services.AddDbContext<ProductosDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Productos__cn")))
+            //        .AddDbContext<UsuariosDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("DBConfiguration__SupermarketScan_Usuarios__cn")))
+            //        ;
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
